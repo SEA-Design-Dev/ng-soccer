@@ -1,12 +1,13 @@
 {
-  "name": "mongo-express-basics",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "ng-soccer",
+  "version": "0.0.1",
+  "description": "A simple MEAN stack app",
+  "main": "server.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Mike Tierney",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.1",
