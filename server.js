@@ -157,4 +157,5 @@ playerRoute.delete(function (req, res) {
 
 
 
+app.use(require("connect-livereload")());
 app.listen(port);

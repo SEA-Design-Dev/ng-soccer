@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="soccr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Soccr: It's cool because it doesn't have an "e"</title>
+    <link rel="stylesheet" href="/assets/styles/app.css">
+  </head>
+  <body>
+    <div ng-controller="PlayersCtrl as vm">
+      <h1>List of players</h1>
+      <ul>
+        <li ng-repeat="player in vm.players">{{player.name}}</li>
+      </ul>
+      <a href="#">Add a new player</a>
+    </div>
+
+    <script src="/assets/node_modules/angular/angular.js"></script>
+    <script src="/assets/js/app/app.js"></script>
+
+    <script src="/assets/js/app/players/players.service.js"></script>
+    <script src="/assets/js/app/players/players.ctrl.js"></script>
+  </body>
+</html>
