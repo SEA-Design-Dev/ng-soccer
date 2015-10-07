@@ -5,16 +5,20 @@ var bodyParser = require("body-parser");
 var Player = require("./models/player");
 
 // Connect to the database
-mongoose.connect("mongodb://localhost/soccerteams");
+mongoose.connect("mongodb://localhost/soccr");
 
 // Create the Express application
 var app = express();
 
-// Use environment defined port or 3000
-var port = process.env.PORT || 3000;
+// Use environment defined port or 4242
+var port = process.env.PORT || 4242;
 
 // Create the Express router
-var router = express.Router();
+var baseRouter = express.Router();
+var apiRouter = express.Router();
+
+// configure ilvereload
+app.use(require('connect-livereload')({port: 4002}));
 
 // Use the body-parser package in our application
 app.use(bodyParser.urlencoded({
@@ -22,17 +26,25 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Dummy route
-router.get("/", function (req, res) {
-  res.json({
-    message: "Whaaaaaaaaat?",
-  });
+baseRouter.get("/", function (req, res) {
+  res.sendFile(__dirname + "/src/app/index.html");
+});
+
+baseRouter.get("/assets/*", function (req, res) {
+  path = req.path.replace(/^\/assets/,'');
+  if (path.match(/node_modules/)) {
+    res.sendFile(__dirname + path);
+  } else {
+    res.sendFile(__dirname + "/public/" + path);
+  }
 });
 
 // Register all our routes with /api
-app.use("/api", router);
+app.use("/api", apiRouter);
+app.use("/", baseRouter);
 
 // Create a new route with prefix /players
-var playersRoute = router.route("/players");
+var playersRoute = apiRouter.route("/players");
 
 
 
@@ -81,7 +93,7 @@ playersRoute.get(function(req, res) {
 // CREATE
 
 // Create a new route for /players/:player_id
-var playerRoute = router.route("/players/:player_id");
+var playerRoute = apiRouter.route("/players/:player_id");
 
 
 // Create endpoint for /api/players/:playerID
