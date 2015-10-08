@@ -1,0 +1,21 @@
+dl {
+  overflow: hidden;
+
+  dt, dd {
+    float: left;
+  }
+
+  dt {
+    clear: left;
+    font-weight: $font-weight-heavy;
+    &:after {
+      content: ": ";
+      display: inline-block;
+    }
+  }
+
+  dd {
+    margin-left: 0.5em;
+    margin-bottom: 2rem;
+  }
+}
