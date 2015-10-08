@@ -56,7 +56,7 @@ playersRoute.post(function (req, res) {
   player.name = req.body.name;
   player.team = req.body.team;
   player.number = req.body.number;
-  player.postion = req.body.position;
+  player.position = req.body.position;
 
   // Save the player and check for errors
   player.save(function (err) {
