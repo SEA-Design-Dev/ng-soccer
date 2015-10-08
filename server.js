@@ -13,42 +13,15 @@ var app = express();
 // Use environment defined port or 3000
 var port = process.env.PORT || 3000;
 
-// Create the Express router
-var router = express.Router();
-
 // Use the body-parser package in our application
 app.use(bodyParser.json());
 
-// Root route
-router.get("/", function (req, res) {
-  res.sendFile(__dirname + "/src/app/index.html");
-});
-
-
-// All assets
-router.get("/assets/*", function (req, res) {
-  path = req.path.replace(/^\/assets/,'');
-  if (path.match(/node_modules/)) {
-    res.sendFile(__dirname + path);
-  } else {
-    res.sendFile(__dirname + "/public/" + path);
-  }
-});
-
-// Register the router with the application
-app.use("/", router);
-
-// Create a new route with prefix /players
-var playersRoute = router.route("/api/players");
-
-
-
-
+app.use(express.static(__dirname + "/public"));
 
 // READ
 
 // Create endpoint /api/players for POST
-playersRoute.post(function (req, res) {
+app.post("/api/players", function (req, res) {
   // Create a new instance of the Player model
   var player = new Player();
 
@@ -70,7 +43,7 @@ playersRoute.post(function (req, res) {
 
 
 // Create endpoint /api/players for GET
-playersRoute.get(function(req, res) {
+app.get("/api/players", function(req, res) {
   // Use the Player model to find all players
   Player.find(function (err, players) {
     if (err) {
@@ -87,12 +60,8 @@ playersRoute.get(function(req, res) {
 
 // CREATE
 
-// Create a new route for /players/:player_id
-var playerRoute = router.route("/api/players/:player_id");
-
-
 // Create endpoint for /api/players/:playerID
-playerRoute.get(function(req, res) {
+app.get("/api/players/:player_id", function(req, res) {
   // Use the player model to find a specific player
   Player.findById(req.params.player_id, function (err, player) {
     if (err) {
@@ -104,12 +73,10 @@ playerRoute.get(function(req, res) {
 });
 
 
-
-
 // UPDATE
 
 // Change the player's number
-playerRoute.put(function(req, res) {
+app.put("/api/players/:player_id", function(req, res) {
   // Use the Player model to find a specific player
   Player.findById(req.params.player_id, function (err, player) {
     if (err) {
@@ -134,13 +101,10 @@ playerRoute.put(function(req, res) {
 });
 
 
-
-
-
 // DELETE
 
 // Create endpoint /api/players/:player_id for DELETE
-playerRoute.delete(function (req, res) {
+app.delete("/api/players/:player_id", function (req, res) {
   // Use the player model to find a specific player and remove it
   Player.findByIdAndRemove(req.params.player_id, function(err) {
     if (err) {
@@ -153,6 +117,15 @@ playerRoute.delete(function (req, res) {
 
 
 
+
+// Load node_modules; not needed once something like webpack is getting used
+app.get('/node_modules/*', function(req, res) {
+  res.sendFile(__dirname + req.path);
+});
+
+app.get('*', function(req, res) {
+  res.sendFile(__dirname + "/src/app/index.html"); // load our public/index.html file
+});
 
 
 app.listen(port);
