@@ -1,0 +1,7 @@
+<h1>List of players</h1>
+<ul>
+  <li ng-repeat="player in vm.players">
+    <a href="#/players/{{player._id}}">{{player.name}}</a> (<button ng-click="vm.delete(player)">Delete</button>)
+  </li>
+</ul>
+<a href="#/players/new">Add a new player</a>

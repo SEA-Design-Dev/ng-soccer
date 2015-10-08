@@ -15,6 +15,10 @@ module.exports = {
     src: src + "/styles/**/*.{sass,scss}",
     dest: dest + '/styles/',
   },
+  partials: {
+    src: [src + "/app/**/*.html", "!" + src + "/app/index.html"],
+    dest: dest + "/partials/",
+  },
   server: {
     src: dest,
     livereload: true,
