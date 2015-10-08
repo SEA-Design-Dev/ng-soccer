@@ -5,27 +5,22 @@ var bodyParser = require("body-parser");
 var Player = require("./models/player");
 
 // Connect to the database
-mongoose.connect("mongodb://localhost/soccr");
+mongoose.connect("mongodb://localhost/soccr"); // name can be whatever you need it to be
 
 // Create the Express application
 var app = express();
 
-// Use environment defined port or 4242
-var port = process.env.PORT || 4242;
+// Use environment defined port or 3000
+var port = process.env.PORT || 3000;
 
 // Create the Express router
 var baseRouter = express.Router();
 var apiRouter = express.Router();
 
-// configure ilvereload
-app.use(require('connect-livereload')({port: 4002}));
-
 // Use the body-parser package in our application
-app.use(bodyParser.urlencoded({
-  extended: true,
-}));
+app.use(bodyParser.json());
 
-// Dummy route
+// Root route
 baseRouter.get("/", function (req, res) {
   res.sendFile(__dirname + "/src/app/index.html");
 });
@@ -69,7 +64,7 @@ playersRoute.post(function (req, res) {
       res.send(err);
     }
 
-    res.json({ message: "Player successfully saved.", data: player});
+    res.json(player);
   });
 });
 
@@ -122,7 +117,10 @@ playerRoute.put(function(req, res) {
     }
 
     // Update the player's number
+    player.name = req.body.name;
+    player.team = req.body.team;
     player.number = req.body.number;
+    player.position = req.body.position;
 
     // Save the player and check for errors
     player.save(function (err) {

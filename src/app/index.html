@@ -10,23 +10,58 @@
       <h1>Soccr</h1>
       <nav>
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><a href="#/">Home</a></li>
           <li><a href="#">About</a></li>
         </ul>
       </nav>
     </header>
-    <div ng-controller="PlayersCtrl as vm">
-      <h1>List of players</h1>
-      <ul>
-        <li ng-repeat="player in vm.players">{{player.name}}</li>
-      </ul>
-      <a href="#">Add a new player</a>
-    </div>
+
+    <main ng-view></main>
 
     <script src="/assets/node_modules/angular/angular.js"></script>
+    <script src="/assets/node_modules/angular-route/angular-route.js"></script>
+    <!-- <script src="/assets/js/app.packed.js"></script> -->
     <script src="/assets/js/app/app.js"></script>
 
     <script src="/assets/js/app/players/players.service.js"></script>
     <script src="/assets/js/app/players/players.ctrl.js"></script>
+    <script src="/assets/js/app/players/player.ctrl.js"></script>
+    <script src="/assets/js/app/players/player_form.ctrl.js"></script>
+    <!-- <script src="/assets/js/app/players/player_details.directive.js"></script> -->
+
+    <!-- templates -->
+    <script type="text/ng-template" id="partials/players/players_list.html">
+      <h1>List of players!</h1>
+      <ul>
+        <li ng-repeat="player in vm.players">
+          <a href="#/players/{{player._id}}">{{player.name}}</a> (<button ng-click="vm.delete(player)">Delete</button>)
+        </li>
+      </ul>
+      <a href="#/players/new">Add a new player</a>
+    </script>
+
+    <script type="text/ng-template" id="partials/players/player_detail.html">
+      <pre>{{vm.player|json}}</pre>
+      <h1>{{vm.player.name}}</h1>
+      <h2>{{vm.player.team}}</h2>
+      <player-details ng-model="vm.player"/> <!-- playerDetails -->
+      <dl>
+        <dt>Position</dt>
+        <dd>{{vm.player.position}}</dd>
+        <dt>Jersey Number</dt>
+        <dd>{{vm.player.number}}</dd>
+      </dl>
+      <a href="#/players/{{vm.player._id}}/edit">Edit player</a>
+    </script>
+
+    <script type="text/ng-template" id="partials/players/player_form.html">
+      <form ng-submit="vm.save()">
+        <input type="text" ng-model="vm.player.name" placeholder="Name" />
+        <input type="text" ng-model="vm.player.team" placeholder="Team" />
+        <input type="number" ng-model="vm.player.number" placeholder="0" />
+        <input type="text" ng-model="vm.player.position" placeholder="Position" />
+        <input type="submit" name="Submit">
+      </form>
+    </script>
   </body>
 </html>

@@ -28,11 +28,6 @@ gulp.task("uglify", function () {
 gulp.task("build:js", ["jshint", "uglify"]);
 
 gulp.task("serve", ["build:css", "build:js"], function () {
-  // start up livereload
-  livereload.listen({
-    port: 4002,
-  });
-
   // Start the server at the beginning of the task
   server.run(["server.js"]);
 
