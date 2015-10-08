@@ -15,9 +15,9 @@ module.exports = {
     src: src + "/styles/**/*.{sass,scss}",
     dest: dest + '/styles/',
   },
-  partials: {
-    src: [src + "/app/**/*.html", "!" + src + "/app/index.html"],
-    dest: dest + "/partials/",
+  html: {
+    src: src + "/app/**/*.html",
+    dest: dest + "/views/",
   },
   server: {
     src: dest,

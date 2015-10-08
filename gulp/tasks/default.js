@@ -1,3 +1,3 @@
 var gulp = require('gulp');
 
-gulp.task('default', ['sass', 'partials', 'uglifyJs', 'watch', 'serve']);
+gulp.task('default', ['sass', 'html', 'uglifyJs', 'watch', 'serve']);

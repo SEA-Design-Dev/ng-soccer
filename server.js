@@ -124,7 +124,7 @@ app.get('/node_modules/*', function(req, res) {
 });
 
 app.get('*', function(req, res) {
-  res.sendFile(__dirname + "/src/app/index.html"); // load our public/index.html file
+  res.sendFile(__dirname + "/public/views/index.html"); // load our public/views/index.html file
 });
 
 
