@@ -14,18 +14,19 @@ var app = express();
 var port = process.env.PORT || 3000;
 
 // Create the Express router
-var baseRouter = express.Router();
-var apiRouter = express.Router();
+var router = express.Router();
 
 // Use the body-parser package in our application
 app.use(bodyParser.json());
 
 // Root route
-baseRouter.get("/", function (req, res) {
+router.get("/", function (req, res) {
   res.sendFile(__dirname + "/src/app/index.html");
 });
 
-baseRouter.get("/assets/*", function (req, res) {
+
+// All assets
+router.get("/assets/*", function (req, res) {
   path = req.path.replace(/^\/assets/,'');
   if (path.match(/node_modules/)) {
     res.sendFile(__dirname + path);
@@ -34,12 +35,11 @@ baseRouter.get("/assets/*", function (req, res) {
   }
 });
 
-// Register all our routes with /api
-app.use("/api", apiRouter);
-app.use("/", baseRouter);
+// Register the router with the application
+app.use("/", router);
 
 // Create a new route with prefix /players
-var playersRoute = apiRouter.route("/players");
+var playersRoute = router.route("/api/players");
 
 
 
@@ -88,7 +88,7 @@ playersRoute.get(function(req, res) {
 // CREATE
 
 // Create a new route for /players/:player_id
-var playerRoute = apiRouter.route("/players/:player_id");
+var playerRoute = router.route("/api/players/:player_id");
 
 
 // Create endpoint for /api/players/:playerID
@@ -155,5 +155,4 @@ playerRoute.delete(function (req, res) {
 
 
 
-app.use(require("connect-livereload")());
 app.listen(port);
