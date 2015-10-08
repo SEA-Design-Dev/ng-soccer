@@ -1,3 +1,5 @@
+require("../app.js");
+
 angular.module("soccr").controller("PlayerCtrl", ["PlayersService", "$routeParams", function (PlayersService, $routeParams) {
   var vm = this;
 

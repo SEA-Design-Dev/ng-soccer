@@ -1,5 +1,6 @@
 <h1>List of players</h1>
-<ul>
+<h2 ng-if="!vm.players.length">No players in the database</h2>
+<ul ng-if="vm.players.length">
   <li ng-repeat="player in vm.players">
     <a href="#/players/{{player._id}}">{{player.name}}</a> (<button ng-click="vm.delete(player)">Delete</button>)
   </li>

@@ -1,3 +1,5 @@
+require("../app.js");
+
 (function () {
   "use strict";
   angular.module("soccr").controller("PlayerFormCtrl", ["PlayersService", "$routeParams", "$location", function (PlayersService, $routeParams, $location) {

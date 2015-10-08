@@ -1,3 +1,6 @@
+require("angular");
+require("angular-route");
+
 (function () {
   "use strict";
 

@@ -3,6 +3,7 @@ var src = './src';
 
 module.exports = {
   javascript: {
+    entryPoint: src + '/app/entry.js',
     src: src + '/app/**/*.js',
     dest: dest + '/js/'
   },
